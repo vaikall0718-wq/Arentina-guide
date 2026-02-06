@@ -1,0 +1,144 @@
+import React, { useState, useEffect } from 'react';
+import { WORLD_DATA } from './constants';
+import NationCard from './components/NationCard';
+import NationDetailModal from './components/NationDetailModal';
+import ChatInterface from './components/ChatInterface';
+import { Nation } from './types';
+
+// Ink Writing Effect Component
+const InkTypewriter = ({ 
+  text, 
+  delay = 0, 
+  speed = 70, 
+  className = "" 
+}: { 
+  text: string; 
+  delay?: number; 
+  speed?: number; 
+  className?: string 
+}) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isStarted, setIsStarted] = useState(false);
+
+  useEffect(() => {
+    const startTimer = setTimeout(() => {
+      setIsStarted(true);
+    }, delay);
+    return () => clearTimeout(startTimer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!isStarted) return;
+    
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setDisplayedText(text.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [isStarted, text, speed]);
+
+  return (
+    <span className={`${className} transition-opacity duration-300 ${isStarted ? 'opacity-100' : 'opacity-0'}`}>
+      {displayedText}
+    </span>
+  );
+};
+
+function App() {
+  const [selectedNation, setSelectedNation] = useState<Nation | null>(null);
+
+  return (
+    <div className="min-h-screen font-sans bg-royal-dark bg-texture selection:bg-royal-gold/30 selection:text-royal-gold">
+      
+      {/* Dark Overlay Vignette */}
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)] opacity-80 z-0"></div>
+
+      {/* Floating Gold Dust Effect (CSS Simulation) */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
+          <div className="absolute top-[10%] left-[20%] w-1 h-1 bg-royal-gold rounded-full shadow-[0_0_10px_gold]"></div>
+          <div className="absolute top-[30%] right-[15%] w-2 h-2 bg-royal-gold rounded-full blur-[1px]"></div>
+          <div className="absolute bottom-[20%] left-[10%] w-1.5 h-1.5 bg-white rounded-full blur-[2px]"></div>
+      </div>
+
+      {/* Hero Section */}
+      <header className="relative w-full h-[60vh] flex flex-col items-center justify-center z-10 overflow-visible">
+        {/* Background Image - Antique Map (Darker, richer) */}
+        <div className="absolute inset-0 z-[-1]">
+          <div className="absolute inset-0 bg-[url('https://image.pollinations.ai/prompt/dark%20antique%20map%20texture%20royal%20library%20background%20candlelight%20rich%20wood%20atmosphere?width=1920&height=1080&nologo=true')] bg-cover bg-center opacity-30"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0f0c15]/80 via-transparent to-[#0f0c15]"></div>
+        </div>
+        
+        <div className="text-center px-4 max-w-5xl mx-auto flex flex-col items-center relative">
+          
+          {/* Main Title with Ropan Style and Starry Effect */}
+          <div className="relative mb-6 py-2 px-8">
+             {/* Subtle Star Cluster Decoration */}
+             <div className="absolute -top-4 -left-2 text-royal-gold/60 text-xl animate-twinkle">✦</div>
+             <div className="absolute top-0 -right-4 text-white/50 text-sm animate-twinkle delay-300">✨</div>
+             <div className="absolute bottom-2 left-1/4 text-royal-gold/40 text-xs animate-twinkle delay-500">✦</div>
+             <div className="absolute -bottom-6 right-10 text-white/40 text-lg animate-twinkle delay-100">.</div>
+             <div className="absolute top-1/2 -left-8 text-royal-gold/30 text-2xl animate-twinkle delay-700">✧</div>
+             <div className="absolute top-1/3 -right-8 text-white/30 text-xs animate-twinkle delay-1000">✦</div>
+             
+             {/* Title Text */}
+             <h1 className="text-6xl md:text-9xl font-gothic text-transparent bg-clip-text bg-gradient-to-b from-[#FFF5E1] via-[#E6C98E] to-[#C5A059] drop-shadow-[0_0_25px_rgba(197,160,89,0.4)] pb-4 leading-tight z-10 tracking-wider">
+               Continent of Arentina
+             </h1>
+          </div>
+          
+          {/* Divider */}
+          <div className="h-[1px] w-32 bg-gradient-to-r from-transparent via-royal-gold to-transparent mb-8 opacity-60"></div>
+
+          {/* Subtitle with Ink Writing Effect */}
+          <div className="flex flex-col items-center gap-2 text-lg md:text-xl text-royal-parchment/80 font-serif italic max-w-2xl mx-auto leading-loose tracking-wide drop-shadow-sm min-h-[5rem]">
+            <InkTypewriter 
+              text="제국, 신성국, 마도왕국." 
+              delay={500} 
+              speed={100}
+            />
+            <InkTypewriter 
+              text="서로 다른 가치와 힘으로 대립하는 판타지 세계" 
+              delay={2500} 
+              speed={60}
+            />
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {WORLD_DATA.nations.map((nation) => (
+            <NationCard 
+              key={nation.id} 
+              nation={nation} 
+              onClick={setSelectedNation} 
+            />
+          ))}
+        </div>
+        
+        <div className="mt-24 text-center">
+          <p className="text-royal-gold/30 text-xs font-serif tracking-[0.2em] uppercase">
+            Chronicles of Arentina • Est. 2026
+          </p>
+        </div>
+      </main>
+
+      {/* Modals & Overlays */}
+      <NationDetailModal 
+        nation={selectedNation} 
+        onClose={() => setSelectedNation(null)} 
+      />
+
+      <ChatInterface />
+    </div>
+  );
+}
+
+export default App;

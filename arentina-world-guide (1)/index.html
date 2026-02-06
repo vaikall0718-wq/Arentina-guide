@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arentina World Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              royal: {
+                dark: '#1a0b0b',     /* Very dark warm brown/black */
+                navy: '#0f172a',
+                crimson: '#4a0404',
+                gold: '#C5A059',     /* Antique Gold */
+                goldLight: '#E5C17C',
+                parchment: '#F5E6D3',
+                paper: '#eaddcf',
+              },
+              astea: {
+                main: '#7f1d1d',     /* Red */
+                accent: '#fbbf24',   /* Gold */
+              },
+              lanoer: {
+                main: '#1e3a8a',     /* Blue */
+                accent: '#e2e8f0',   /* Silver/White */
+              },
+              elgrain: {
+                main: '#581c87',     /* Purple */
+                accent: '#c084fc',   /* Lavender */
+              },
+            },
+            fontFamily: {
+              serif: ['Playfair Display', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+              fancy: ['Cinzel', 'serif'], 
+              cursive: ['Pinyon Script', 'cursive'], 
+              gothic: ['UnifrakturMaguntia', 'cursive'], 
+              zen: ['Zen Old Mincho', 'serif'], /* Added for historical records */
+            },
+            backgroundImage: {
+              'royal-gradient': 'radial-gradient(circle at center, #2d1b2e 0%, #0f0c15 100%)',
+              'gold-frame': 'linear-gradient(45deg, #996515, #ffd700, #996515)',
+            }
+          },
+        },
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=Cinzel:wght@400;700;900&family=Pinyon+Script&family=UnifrakturMaguntia&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0f0c15;
+        color: #F5E6D3;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+      }
+      
+      /* Subtle noise texture for vintage feel */
+      .bg-texture {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1a0b0b;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #C5A059;
+        border-radius: 4px;
+        border: 1px solid #4a0404;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #E5C17C;
+      }
+      
+      .glass-panel {
+        background: rgba(20, 10, 10, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(197, 160, 89, 0.3);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Star twinkle animation */
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+      .animate-twinkle {
+        animation: twinkle 3s infinite ease-in-out;
+      }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-500 { animation-delay: 0.5s; }
+      .delay-700 { animation-delay: 0.7s; }
+      .delay-1000 { animation-delay: 1s; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
